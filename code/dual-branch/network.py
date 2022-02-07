@@ -142,10 +142,12 @@ class SimpleDecoderBlock(nn.Module):
     def __init__(self, inplanes, planes):
         super(SimpleDecoderBlock, self).__init__()
         self.decoder = nn.Conv2d(inplanes, planes, 3, 1, 1)
+        self.relu = nn.LeakyReLU(0.2),
         self.ps = nn.PixelShuffle(2)
 
     def forward(self, x):
         x = self.decoder(x)
+        x = self.relu(x)
         return self.ps(x)
 
 class Generator(nn.Module):
